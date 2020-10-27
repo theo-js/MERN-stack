@@ -11,7 +11,7 @@
     "server": "nodemon server.js",
     "client": "yarn --cwd client start",
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
-    "heroku-postbuild": "YARN_PRODUCTION=false yarn --cwd client install && yarn --cwd client build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client install && yarn --cwd client build"
   },
   "dependencies": {
     "concurrently": "^5.3.0",
