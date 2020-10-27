@@ -11,6 +11,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*") // update to match the domain you will make the request from
     res.header("Acess-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+    res.header("X-Frame-Options", "sameorigin")
     next()
 })
 
@@ -29,7 +30,11 @@ mongoose
 
 // Use routes
 const itemsRouter = require('./routes/api/items')
+const usersRouter = require('./routes/api/users')
+const authRouter = require('./routes/auth')
 app.use('/api/items', itemsRouter)
+app.use('/api/users', usersRouter)
+app.use('/auth', authRouter)
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
