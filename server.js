@@ -31,10 +31,10 @@ mongoose
 // Use routes
 const itemsRouter = require('./routes/api/items')
 const usersRouter = require('./routes/api/users')
-const authRouter = require('./routes/auth')
+const authRouter = require('./routes/api/auth')
 app.use('/api/items', itemsRouter)
 app.use('/api/users', usersRouter)
-app.use('/auth', authRouter)
+app.use('/api/auth', authRouter)
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

@@ -1,4 +1,11 @@
-import React, { Component } from 'react'
+import React, { Fragment, useState } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
+import RegisterModal from './RegisterModal'
+import LoginModal from './LoginModal'
+import Logout from './Logout'
+
 import {
     Collapse,
     Navbar,
@@ -10,34 +17,58 @@ import {
     Container
 } from 'reactstrap'
 
-export default class AppNavbar extends Component {
-    state = {
-        isOpen: false
+
+const AppNavbar = ({ isAuthenticated, user }) => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    const toggle = () => {
+        setIsOpen(!isOpen)
     }
 
-    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-    }
-
-    render () {
-        return <div>
-            <Navbar color="dark" dark expand="sm" className="mb-5">
-                <Container>
-                    <NavbarBrand href="/">ShoppingList</NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink href="https://github.com/theo-js">
-                                    Github
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
-                </Container>
-            </Navbar>
-        </div>
-    }
+    return <div>
+        <Navbar color="dark" dark expand="sm" className="mb-5">
+            <Container>
+                <NavbarBrand href="/">ShoppingList</NavbarBrand>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        {!isAuthenticated && (
+                            <Fragment>
+                                <NavItem>
+                                    <RegisterModal />
+                                </NavItem>
+                                <NavItem>
+                                    <LoginModal />
+                                </NavItem>
+                            </Fragment>
+                        )}
+                        {isAuthenticated && (
+                            <Fragment>
+                                {user && (<NavItem>
+                                    <span className="navbar-text mr-3">
+                                        <strong>Welcome {user.username}</strong>
+                                    </span>
+                                </NavItem>)}
+                                <NavItem>
+                                    <Logout />
+                                </NavItem>
+                            </Fragment>
+                        )}
+                    </Nav>
+                </Collapse>
+            </Container>
+        </Navbar>
+    </div>
 }
+
+AppNavbar.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
+})
+
+export default connect(mapStateToProps)(AppNavbar)

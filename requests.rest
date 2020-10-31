@@ -1,21 +1,45 @@
-GET http://localhost:5000/auth
-
-
-###
-
+# GET ALL USERS
 GET http://localhost:5000/api/users
 
 ###
-
-GET http://localhost:5000/api/users/5f9889739db92c36e0a8d305
+# GET SPECIFIC USER
+GET http://localhost:5000/api/users/:uid
 
 ###
-
-POST http://localhost:5000/api/users/signup
+# SIGN UP
+POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
     "username": "theo-js",
     "age": 26,
-    "email": "dev.js.theo@gmail.com"
+    "email": "dev.js.theo@gmail.com",
+    "password": "lolololol",
+    "confirmation": "lolololol"
 }
+
+###
+# LOGIN
+POST http://localhost:5000/api/auth
+Content-Type: application/json
+
+{
+    "email": "dev.js.theo@gmail.com",
+    "password": "lolololol"
+}
+
+###
+# GET CURRENTLY LOGGED IN USER
+GET http://localhost:5000/api/auth/user
+X-Auth-Token: 
+
+###
+# GET ITEMS
+GET http://localhost:5000/api/items
+X-Auth-Token: 
+
+
+###
+# DELETE ACCOUNT
+DELETE http://localhost:5000/api/users/:uid
+X-Auth-Token: 
