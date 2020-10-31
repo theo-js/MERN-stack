@@ -26,7 +26,6 @@ export const loadUser = () => (dispatch, getState) => {
 
 // Login
 export const signin = ({ email, password }, history) => dispatch => {
-    console.log(history)
     dispatch(clearErrors())
     dispatch({ type: USER_LOADING })
     // Headers
@@ -62,7 +61,7 @@ export const register = ({ username, email, age, password, confirmation }, histo
 
     axios.post('/api/users/register', body, config)
         .then(res => {
-            dispatch({ type: REGISTER_SUCCESS, payload: res.data })
+            dispatch({ type: REGISTER_SUCCESS, payload: res.data.user })
             history.replace('/dashboard')
         })
         .catch(err => {
